@@ -4,7 +4,7 @@ from astrbot.api import logger
 from astrbot.core.message.components import BaseMessageComponent, ComponentType
 import astrbot.api.message_components as Comp
 from pyAPart import convert_asciiart
-
+import time
 
 @register("asciiart", "swl", "将图片转成ascii字符画", "0.1.0")
 class AsciiArt(Star):
@@ -26,7 +26,8 @@ class AsciiArt(Star):
         chain = [Comp.At(qq=event.get_sender_id()),]
         for image in images:
             img = convert_asciiart(image.url, colorful=False)
-            img.save(f"{self.save_dir}{user_name}_{image.id}.png")
+            
+            img.save(f"{self.save_dir}{user_name}-{time.localtime}.png")
             chain.append(Comp.Image.fromFileSystem(img))
             
         yield event.chain_result(chain)
