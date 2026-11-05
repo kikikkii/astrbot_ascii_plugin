@@ -33,9 +33,9 @@ class AsciiArt(Star):
         chain = [Comp.At(qq=event.get_sender_id()),]
         for image in images:
             img = convert_asciiart(image.url, colorful=False)
-            
-            img.save(f"{self.save_dir}/{time.localtime}.png")
-            chain.append(Comp.Image.fromFileSystem(img))
+            save_path = Path(self.save_dir) / f"{time.strftime('%Y%m%d%H%M%S')}.png"
+            img.save(save_path)
+            chain.append(Comp.Image.fromFileSystem(str(save_path)))
             
         yield event.chain_result(chain)
 
