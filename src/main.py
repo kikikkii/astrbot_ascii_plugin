@@ -6,7 +6,7 @@ import astrbot.api.message_components as Comp
 from pyAPart import convert_asciiart
 
 
-@register("asciiart", "swl", "将图片转成ascii字符画的差距", "0.1.0")
+@register("asciiart", "swl", "将图片转成ascii字符画", "0.1.0")
 class AsciiArt(Star):
     def __init__(self, context: Context):
         super().__init__(context)
