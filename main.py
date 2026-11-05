@@ -19,10 +19,8 @@ class AsciiArt(Star):
     # 注册指令的装饰器。指令名为 helloworld。注册成功后，发送 `/helloworld` 就会触发这个指令，并回复 `你好, {user_name}!`
     @filter.command("asciiart", alias=["字符画", "asciiart"], description="将图片转为ascii字符画")
     async def convert2asciiart(self, event: AstrMessageEvent):
-        """将图片转为ascii字符画"""
+        """该插件可以将图片转为ascii字符画"""
         user_name = event.get_sender_name()
-        message_str = event.message_str # 用户发的纯文本消息字符串
-        message_chain = event.get_messages()
         message: list[BaseMessageComponent] = event.get_messages()
         images = [msg for msg in message if msg.type == ComponentType.Image]
         chain = [Comp.At(qq=event.get_sender_id()),]
