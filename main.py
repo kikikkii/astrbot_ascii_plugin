@@ -4,13 +4,20 @@ from astrbot.api import logger
 from astrbot.core.message.components import BaseMessageComponent, ComponentType
 import astrbot.api.message_components as Comp
 from pyAPart import convert_asciiart
+from astrbot.core.utils.astrbot_path import get_astrbot_data_path
 import time
+from pathlib import Path
+import os
 
 @register("asciiart", "swl", "将图片转成ascii字符画", "0.1.0")
 class AsciiArt(Star):
     def __init__(self, context: Context):
         super().__init__(context)
-        self.save_dir = "./ascii_art/"
+        self.save_dir = (Path(get_astrbot_data_path()) / "plugin_data" / self.name)
+        if not os.path.exists(self.save_dir):
+            # 如果目录不存在，则创建它
+            os.makedirs(self.save_dir)
+        
 
     async def initialize(self):
         """可选择实现异步的插件初始化方法，当实例化该插件类之后会自动调用该方法。"""
@@ -27,7 +34,7 @@ class AsciiArt(Star):
         for image in images:
             img = convert_asciiart(image.url, colorful=False)
             
-            img.save(f"{self.save_dir}{user_name}-{time.localtime}.png")
+            img.save(f"{self.save_dir}/{time.localtime}.png")
             chain.append(Comp.Image.fromFileSystem(img))
             
         yield event.chain_result(chain)
