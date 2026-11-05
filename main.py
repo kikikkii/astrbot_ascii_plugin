@@ -32,7 +32,7 @@ class AsciiArt(Star):
         images = [msg for msg in message if msg.type == ComponentType.Image]
         chain = [Comp.At(qq=event.get_sender_id()),]
         for image in images:
-            img = convert_asciiart(image.url, colorful=False)
+            img = convert_asciiart(image.url, colorful=True)
             save_path = Path(self.save_dir) / f"{time.strftime('%Y%m%d%H%M%S')}.png"
             img.save(save_path)
             chain.append(Comp.Image.fromFileSystem(str(save_path)))
